@@ -52,7 +52,8 @@ class NoteList extends StatelessWidget {
           return Dismissible(
             key: ValueKey(notes[index].noteID),
             direction: DismissDirection.startToEnd,
-            onDismissed: (direction) async {
+            onDismissed: (direction)  {},
+            confirmDismiss: (direction) async {
               final result = await showDialog(
                   context: context, builder: (context) => NoteDelete());
               print(result);

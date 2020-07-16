@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class NoteModify extends StatelessWidget {
 
-  // ao clicar no registro para pegar o dados pelo ID
   final String noteID;
   bool get isEditing => noteID != null;
 
@@ -18,7 +17,7 @@ class NoteModify extends StatelessWidget {
           children: <Widget>[
             TextField(
               decoration: InputDecoration(
-                  hintText: 'Note title'
+                  hintText: 'Titulo da nota'
               ),
             ),
 
@@ -26,7 +25,7 @@ class NoteModify extends StatelessWidget {
 
             TextField(
               decoration: InputDecoration(
-                  hintText: 'Note content'
+                  hintText: 'Conteúdo da nota'
               ),
             ),
 
