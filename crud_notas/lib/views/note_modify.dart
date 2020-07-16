@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class NoteModify extends StatelessWidget {
 
+  // ao clicar no registro para pegar o dados pelo ID
   final String noteID;
   bool get isEditing => noteID != null;
 
@@ -10,7 +11,7 @@ class NoteModify extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(isEditing ? 'Edit note' : 'Create note')),
+      appBar: AppBar(title: Text(isEditing ? 'Editar Notas' : 'Criando Notas')),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
