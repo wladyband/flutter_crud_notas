@@ -1,5 +1,5 @@
 import 'package:crud_notas/models/api_response.dart';
-import 'package:crud_notas/models/note.dart';
+import 'package:crud_notas/models/ListaNotas.dart';
 import 'package:crud_notas/services/webclient.dart';
 import 'package:crud_notas/views/note_delete.dart';
 import 'package:crud_notas/views/note_modify.dart';
@@ -14,7 +14,7 @@ class NoteList extends StatefulWidget {
 class _NoteListState extends State<NoteList> {
   NotesService get service => GetIt.I<NotesService>();
 
-  APIResponse<List<Note>> _apiResponse;
+  APIResponse<List<ListaNotas>> _apiResponse;
   bool _isLoading = false;
 
   String formatDateTime(DateTime dateTime) {
@@ -79,7 +79,6 @@ class _NoteListState extends State<NoteList> {
                   confirmDismiss: (direction) async {
                     final result = await showDialog(
                         context: context, builder: (context) => NoteDelete());
-                    print(result);
                     return result;
                   },
                   background: Container(
