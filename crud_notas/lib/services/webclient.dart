@@ -8,7 +8,7 @@ class NotesService {
   static const API = 'http://api.notes.programmingaddict.com';
   static const headers = {'apiKey': '4288f18d-7e85-4e51-8c31-42b9fcd970ff'};
 
-  Future<APIResponse<List<Note>>> getNotesList() {
+  Future<APIResponse<List<Note>>> getNotesList(){
     return http.get(API + '/notes', headers: headers).then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
