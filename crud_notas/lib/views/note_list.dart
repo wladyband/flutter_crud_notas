@@ -41,7 +41,7 @@ class NoteList extends StatelessWidget {
         ],
       ),
       body: ListView.separated(
-        // Poderia ser feito dessa forma ==>  separatorBuilder: (BuildContext context, int index) => Divider(height: 1, color: Colors.green),
+        // Também poderia ser feito dessa forma ==>  separatorBuilder: (BuildContext context, int index) => Divider(height: 1, color: Colors.green),
         separatorBuilder: (BuildContext context, int index) {
           return Divider(
             height: 1,
