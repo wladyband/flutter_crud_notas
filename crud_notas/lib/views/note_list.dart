@@ -1,4 +1,5 @@
 import 'package:crud_notas/models/note.dart';
+import 'package:crud_notas/views/note_delete.dart';
 import 'package:crud_notas/views/note_modify.dart';
 import 'package:flutter/material.dart';
 
@@ -48,17 +49,35 @@ class NoteList extends StatelessWidget {
           );
         },
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              notes[index].noteTitle,
-              style: TextStyle(color: Theme.of(context).primaryColor),
-            ),
-            subtitle: Text(
-                'Últimas alterações foram em ${formatDateTime(notes[index].latestEditDateTime)}'),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => NoteModify(noteID: notes[index].noteID)));
+          return Dismissible(
+            key: ValueKey(notes[index].noteID),
+            direction: DismissDirection.startToEnd,
+            onDismissed: (direction) async {
+              final result = await showDialog(
+                  context: context, builder: (context) => NoteDelete());
+              print(result);
+              return result;
             },
+            background: Container(
+              color: Colors.red,
+              padding: EdgeInsets.only(left: 16),
+              child: Align(
+                child: Icon(Icons.delete, color: Colors.white),
+                alignment: Alignment.centerLeft,
+              ),
+            ),
+            child: ListTile(
+              title: Text(
+                notes[index].noteTitle,
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
+              subtitle: Text(
+                  'Últimas alterações foram em ${formatDateTime(notes[index].latestEditDateTime)}'),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => NoteModify(noteID: notes[index].noteID)));
+              },
+            ),
           );
         },
         itemCount: notes.length,
