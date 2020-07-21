@@ -12,7 +12,7 @@ class NoteList extends StatefulWidget {
 }
 
 class _NoteListState extends State<NoteList> {
-  NotesService get service => GetIt.I<NotesService>();
+  NotasService get service => GetIt.I<NotasService>();
 
   APIResponse<List<ListaNotas>> _apiResponse;
   bool _isLoading = false;
@@ -50,8 +50,12 @@ class _NoteListState extends State<NoteList> {
             IconButton(
                 icon: Icon(Icons.add),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => NoteModify()));
+                  Navigator.of(context)
+                      .push(
+                          MaterialPageRoute(builder: (context) => NoteModify()))
+                      .then((_) {
+                    _fetchNotes();
+                  });
                 })
           ],
         ),
@@ -95,8 +99,7 @@ class _NoteListState extends State<NoteList> {
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                     subtitle: Text(
-                        'Últimas alterações foram em ${formatDateTime(_apiResponse.data[index].latestEditDateTime ??
-                        _apiResponse.data[index].createDateTime)}'),
+                        'Últimas alterações foram em ${formatDateTime(_apiResponse.data[index].latestEditDateTime ?? _apiResponse.data[index].createDateTime)}'),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (_) => NoteModify(

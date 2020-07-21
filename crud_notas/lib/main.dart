@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 //configuração local da API
-void setupLocator(){
-  GetIt.I.registerLazySingleton(() => NotesService());
+void setupLocator() {
+  GetIt.I.registerLazySingleton(() => NotasService());
 }
 
 void main() {
