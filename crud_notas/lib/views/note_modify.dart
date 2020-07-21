@@ -78,14 +78,48 @@ class _NoteModifyState extends State<NoteModify> {
                       color: Theme.of(context).primaryColor,
                       onPressed: () async {
                         if (isEditing) {
-                          // update note
-                        } else {
-
                           setState(() {
                             _isLoading = true;
                           });
 
-                          final note = NotaInsert(
+                          final note = NotaModificada(
+                              noteTitle: _titleController.text,
+                              noteContent: _contentController.text);
+                          final result = await notesService.updateNote(
+                              widget.noteID, note);
+
+                          setState(() {
+                            _isLoading = false;
+                          });
+
+                          final title = 'Executado';
+                          final text = result.error
+                              ? (result.errorMessage ?? 'Houve uma erro')
+                              : 'Sua nota foi atualizada';
+
+                          showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                    title: Text(title),
+                                    content: Text(text),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text('Ok'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      )
+                                    ],
+                                  )).then((data) {
+                            if (result.data) {
+                              Navigator.of(context).pop();
+                            }
+                          });
+                        } else {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          final note = NotaModificada(
                               noteTitle: _titleController.text,
                               noteContent: _contentController.text);
                           final result = await notesService.createNote(note);
@@ -94,10 +128,10 @@ class _NoteModifyState extends State<NoteModify> {
                             _isLoading = false;
                           });
 
-                          final title = 'Done';
+                          final title = 'Executado';
                           final text = result.error
-                              ? (result.errorMessage ?? 'An error occurred')
-                              : 'Your note was created';
+                              ? (result.errorMessage ?? 'Houve um erro')
+                              : 'Sua nota foi salva';
 
                           showDialog(
                               context: context,

@@ -35,12 +35,12 @@ class NotasService {
         final jsonData = json.decode(data.body);
         return APIResponse<Nota>(data: Nota.fromJson(jsonData));
       }
-      return APIResponse<Nota>(error: true, errorMessage: 'Erro inesperado');
+      return APIResponse<Nota>(error: true, errorMessage: 'Erro ao listar');
     }).catchError((context) =>
-        APIResponse<Nota>(error: true, errorMessage: 'Erro inesperado'));
+        APIResponse<Nota>(error: true, errorMessage: 'Erro ao listar'));
   }
 
-  Future<APIResponse<bool>> createNote(NotaInsert item) {
+  Future<APIResponse<bool>> createNote(NotaModificada item) {
     return http
         .post(API + '/notes',
             headers: headers, body: json.encode(item.toJson()))
@@ -48,8 +48,32 @@ class NotasService {
       if (data.statusCode == 201) {
         return APIResponse<bool>(data: true);
       }
-      return APIResponse<bool>(error: true, errorMessage: 'Erro inesperado');
+      return APIResponse<bool>(error: true, errorMessage: 'Erro de criação');
     }).catchError((_) =>
-            APIResponse<bool>(error: true, errorMessage: 'Erro inesperado'));
+            APIResponse<bool>(error: true, errorMessage: 'Erro de criação'));
+  }
+
+  Future<APIResponse<bool>> updateNote(String noteID, NotaModificada item) {
+    return http
+        .put(API + '/notes/' + noteID,
+            headers: headers, body: json.encode(item.toJson()))
+        .then((data) {
+      if (data.statusCode == 204) {
+        return APIResponse<bool>(data: true);
+      }
+      return APIResponse<bool>(
+          error: true, errorMessage: 'Erro de atualização');
+    }).catchError((_) => APIResponse<bool>(
+            error: true, errorMessage: 'Erro de atualização'));
+  }
+
+  Future<APIResponse<bool>> deleteNote(String noteID) {
+    return http.delete(API + '/notes/' + noteID, headers: headers).then((data) {
+      if (data.statusCode == 204) {
+        return APIResponse<bool>(data: true);
+      }
+      return APIResponse<bool>(error: true, errorMessage: 'Erro de exclusão');
+    }).catchError((_) =>
+        APIResponse<bool>(error: true, errorMessage: 'Erro de exclusão'));
   }
 }

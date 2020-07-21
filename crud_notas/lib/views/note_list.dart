@@ -83,6 +83,30 @@ class _NoteListState extends State<NoteList> {
                   confirmDismiss: (direction) async {
                     final result = await showDialog(
                         context: context, builder: (context) => NoteDelete());
+                    //ação de exclusão
+                    if (result) {
+                      final deleteResult = await service.deleteNote(_apiResponse.data[index].noteID);
+
+                      var message;
+                      if (deleteResult != null && deleteResult.data == true) {
+                        message = 'Sua nota foi excluída com sucesso';
+                      } else {
+                        message = deleteResult?.errorMessage ?? 'Erro ao tentar excluir';
+                      }
+
+                      showDialog(
+                          context: context, builder: (_) => AlertDialog(
+                        title: Text('Executado'),
+                        content: Text(message),
+                        actions: <Widget>[
+                          FlatButton(child: Text('Ok'), onPressed: () {
+                            Navigator.of(context).pop();
+                          })
+                        ],
+                      ));
+
+                      return deleteResult?.data ?? false;
+                    }
                     return result;
                   },
                   background: Container(
@@ -103,7 +127,9 @@ class _NoteListState extends State<NoteList> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (_) => NoteModify(
-                              noteID: _apiResponse.data[index].noteID)));
+                              noteID: _apiResponse.data[index].noteID))).then((data) {
+                        _fetchNotes();
+                      });
                     },
                   ),
                 );
