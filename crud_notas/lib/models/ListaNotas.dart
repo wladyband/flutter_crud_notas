@@ -1,3 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
+part 'ListaNotas.g.dart';
+
+@JsonSerializable()
 class ListaNotas {
   String noteID;
   String noteTitle;
@@ -10,14 +14,14 @@ class ListaNotas {
       this.createDateTime,
       this.latestEditDateTime});
 
-  factory ListaNotas.fromJson(Map<String, dynamic> item) {
-    return ListaNotas(
-      noteID: item['noteID'],
-      noteTitle: item['noteTitle'],
-      createDateTime: DateTime.parse(item['createDateTime']),
-      latestEditDateTime: item['latestEditDateTime'] != null
-          ? DateTime.parse(item['latestEditDateTime'])
-          : null,
-    );
-  }
+  factory ListaNotas.fromJson(Map<String, dynamic> item) => _$ListaNotasFromJson(item);
+
 }
+/*
+tem que inseri esse comando na pasta do projeto.
+
+ flutter packages pub run build_runner build --delete-conflicting-outputs
+
+ OBS: Para criação ele demora um pouco para criar o arquivo, sempre lembre de salvar o arquivo para executar o comando.
+
+*/
